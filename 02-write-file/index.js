@@ -8,10 +8,15 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-rl.question('Hello! Do you want remember something? ', (answer) => {
-  fs.writeFile(filePath, answer, (err) => {
-    if (err) throw err;
-  });
-  console.log(`Great! I remember ${answer} in ${filePath}.`);
-  rl.close();
+rl.question('Hello! Do you want remember something? \n', (answer) => {
+  if (answer === 'exit') {
+    rl.close();
+  } else {
+    fs.writeFile(filePath, answer, (err) => {
+      if (err) throw err;
+    });
+  }
 });
+
+const bye = () => console.log('Good-bye!');
+rl.on('close', bye);
