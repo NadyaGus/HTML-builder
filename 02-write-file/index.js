@@ -1,22 +1,29 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const filePath = path.join(__dirname, 'text.txt');
-
 const readline = require('node:readline');
+const os = require('node:os');
+const { stdout } = require('node:process');
+
+const output = fs.createWriteStream(filePath);
 const rl = readline.createInterface({
   input: process.stdin,
-  output: process.stdout,
+  output: output,
 });
 
-rl.question('Hello! Do you want remember something? \n', (answer) => {
-  if (answer === 'exit') {
-    rl.close();
-  } else {
-    fs.writeFile(filePath, answer, (err) => {
-      if (err) throw err;
-    });
-  }
+stdout.write(`Hello! Do you want remember something?${os.EOL}`, () => {
+  rl.on('line', (answer) => {
+    if (answer === 'exit') {
+      bye();
+    } else {
+      output.write(`${answer}${os.EOL}`);
+    }
+  });
 });
 
-const bye = () => console.log('Good-bye!');
-rl.on('close', bye);
+const bye = () => {
+  console.log('Goodbye!');
+  rl.close();
+};
+
+process.on('SIGINT', bye);
