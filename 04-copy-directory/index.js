@@ -1,13 +1,30 @@
 const fsPromises = require('node:fs/promises');
 const path = require('node:path');
+const { constants } = require('node:fs');
+
+const dirPath = path.join(__dirname, 'files');
 
 (async () => {
   try {
-    const dirPath = path.join(__dirname, 'files');
-    await fsPromises.mkdir(path.join(__dirname, 'files-copy'), {
-      recursive: true,
-    });
+    const copyDirPath = path.join(__dirname, 'files-copy');
+    await fsPromises.access(copyDirPath, constants.F_OK);
+    await fsPromises.rm(copyDirPath, { recursive: true });
+    makeDir();
+    copyFile();
+  } catch {
+    makeDir();
+    copyFile();
+  }
+})();
 
+const makeDir = async () => {
+  await fsPromises.mkdir(path.join(__dirname, 'files-copy'), {
+    recursive: true,
+  });
+};
+
+const copyFile = async () => {
+  try {
     const files = await fsPromises.readdir(dirPath);
     const promises = [];
 
@@ -22,4 +39,4 @@ const path = require('node:path');
   } catch (err) {
     console.error(err);
   }
-})();
+};
