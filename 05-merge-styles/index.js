@@ -7,17 +7,19 @@ const distPath = path.join(__dirname, 'project-dist');
 const stylesPath = path.join(__dirname, 'styles');
 const bundle = path.join(distPath, 'bundle.css');
 
-(async () => {
+const createBundle = async () => {
   try {
     await fsPromises.access(bundle, constants.F_OK);
     await fsPromises.rm(bundle);
   } catch {
     await fsPromises.appendFile(bundle, '');
   }
-})();
+};
 
 (async () => {
   try {
+    await createBundle();
+
     const files = await fsPromises.readdir(stylesPath);
     const promises = [];
 

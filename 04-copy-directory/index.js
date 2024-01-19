@@ -9,21 +9,21 @@ const dirPath = path.join(__dirname, 'files');
     const copyDirPath = path.join(__dirname, 'files-copy');
     await fsPromises.access(copyDirPath, constants.F_OK);
     await fsPromises.rm(copyDirPath, { recursive: true });
-    makeDir();
-    copyFile();
+    await makeDir();
+    copyFiles();
   } catch {
-    makeDir();
-    copyFile();
+    await makeDir();
+    copyFiles();
   }
 })();
 
 const makeDir = async () => {
-  await fsPromises.mkdir(path.join(__dirname, 'files-copy'), {
+  fsPromises.mkdir(path.join(__dirname, 'files-copy'), {
     recursive: true,
   });
 };
 
-const copyFile = async () => {
+const copyFiles = async () => {
   try {
     const files = await fsPromises.readdir(dirPath);
     const promises = [];
