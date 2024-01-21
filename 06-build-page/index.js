@@ -1,7 +1,6 @@
-const { readFile } = require('node:fs/promises');
+const { readFile, constants } = require('node:fs/promises');
 const fsPromises = require('node:fs/promises');
 const path = require('node:path');
-const { constants } = require('node:fs');
 
 const distPath = path.join(__dirname, 'project-dist');
 const assetsPath = path.join(__dirname, 'assets');
@@ -97,7 +96,7 @@ const fillCss = async () => {
   const styles = await fsPromises.readdir(cssPathDir);
 
   for (const style of styles) {
-    const stylePath = path.join(cssPathDir, `${style}`);
+    const stylePath = path.join(cssPathDir, style);
     const content = await readFile(stylePath, { encoding: 'utf-8' });
 
     promises.push(fsPromises.appendFile(distCssPath, content));

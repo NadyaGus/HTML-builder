@@ -1,5 +1,4 @@
-const { readFile } = require('node:fs/promises');
-const { constants } = require('node:fs');
+const { readFile, constants } = require('node:fs/promises');
 const fsPromises = require('node:fs/promises');
 const path = require('node:path');
 

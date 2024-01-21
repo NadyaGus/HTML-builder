@@ -1,6 +1,6 @@
 const fsPromises = require('node:fs/promises');
 const path = require('node:path');
-const { constants } = require('node:fs');
+const { constants } = require('node:fs/promises');
 
 const dirPath = path.join(__dirname, 'files');
 
