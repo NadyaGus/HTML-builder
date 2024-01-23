@@ -81,7 +81,7 @@ const fillHtml = async () => {
     });
 
     const componentName = component.slice(0, component.indexOf('.'));
-    content = content.replace(`{{${componentName}}}`, contentOfComponent);
+    content = content.replaceAll(`{{${componentName}}}`, contentOfComponent);
   }
 
   await fsPromises.appendFile(distHtmlPath, content);
