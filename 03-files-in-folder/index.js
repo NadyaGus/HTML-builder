@@ -9,9 +9,9 @@ const dirPath = path.join(__dirname, '/secret-folder');
     const files = await fsPromises.readdir(dirPath, { withFileTypes: true });
 
     for (const file of files) {
-      const fileName = file.name.slice(0, file.name.indexOf('.'));
-      const fileFormat = path.extname(file.name);
-      const filePath = path.join(dirPath, fileName + fileFormat);
+      const filePath = path.join(file.path, file.name);
+      const fileFormat = path.extname(filePath);
+      const fileName = path.basename(filePath, fileFormat);
 
       if (file.isFile()) {
         stat(filePath, (err, stats) => {

@@ -109,9 +109,7 @@ const fillCss = async () => {
   try {
     await createDistDir();
     await createIndexAndStyle();
-    await addAssets();
-    await fillHtml();
-    fillCss();
+    await Promise.all([addAssets(), fillHtml(), fillCss()]);
   } catch (err) {
     console.log(err);
   }
